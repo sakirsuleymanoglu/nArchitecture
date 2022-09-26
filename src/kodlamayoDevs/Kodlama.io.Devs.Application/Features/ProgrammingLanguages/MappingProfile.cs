@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage;
+using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.UpdateProgrammingLanguage;
 using Kodlama.io.Devs.Domain.Entities;
 
 namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages
@@ -10,6 +11,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages
         {
             CreateMap<ProgrammingLanguage, CreateProgrammingLanguageCommandResponse>();
             CreateMap<CreateProgrammingLanguageCommandRequest, ProgrammingLanguage>();
+            CreateMap<UpdateProgrammingLanguageCommandRequest, ProgrammingLanguage>();
         }
     }
 }

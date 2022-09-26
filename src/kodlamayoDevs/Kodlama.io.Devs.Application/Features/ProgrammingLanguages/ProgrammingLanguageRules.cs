@@ -1,5 +1,6 @@
 ﻿using Kodlama.io.Devs.Application.Exceptions.ProgrammingLanguages;
 using Kodlama.io.Devs.Application.Services.Repositories;
+using Kodlama.io.Devs.Domain.Entities;
 
 namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages
 {
@@ -17,6 +18,12 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages
             bool result = await _programmingLanguageRepository.AnyAsync(x => x.Name == name);
             if (result)
                 throw new ProgrammingLanguageAlreadyExistsException();
+        }
+
+        public void CheckIfExists(ProgrammingLanguage? programmingLanguage)
+        {
+            if (programmingLanguage == null)
+                throw new ProgrammingLanguageNotFoundException();
         }
     }
 }

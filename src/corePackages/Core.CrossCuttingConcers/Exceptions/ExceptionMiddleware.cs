@@ -36,11 +36,13 @@ public class ExceptionMiddleware
     {
         context.Response.ContentType = "application/json";
 
-        if (exception is ValidationException) return CreateValidationException(context, exception);
-        if (exception is BusinessException) return CreateBusinessException(context, exception);
-        if (exception is AuthorizationException)
-            return CreateAuthorizationException(context, exception);
-        return CreateInternalException(context, exception);
+        return exception switch
+        {
+            ValidationException => CreateValidationException(context, exception),
+            BusinessException => CreateBusinessException(context, exception),
+            AuthorizationException => CreateAuthorizationException(context, exception),
+            _ => CreateInternalException(context, exception),
+        };
     }
 
     private Task CreateAuthorizationException(HttpContext context, Exception exception)

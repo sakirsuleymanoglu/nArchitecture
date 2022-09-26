@@ -1,5 +1,6 @@
 ﻿using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.DeleteProgrammingLanguage;
+using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.UpdateProgrammingLanguage;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kodlama.io.Devs.WebAPI.Controllers
@@ -23,6 +24,12 @@ namespace Kodlama.io.Devs.WebAPI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             DeleteProgrammingLanguageCommandRequest request = new() { Id = id };
+            await SendRequestAsync(request);
+            return NoContent();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateProgrammingLanguageCommandRequest request)
+        {
             await SendRequestAsync(request);
             return NoContent();
         }
