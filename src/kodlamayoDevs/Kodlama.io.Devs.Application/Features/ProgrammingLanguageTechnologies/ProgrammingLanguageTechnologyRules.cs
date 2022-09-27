@@ -22,5 +22,11 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguageTechnologies
             if (result)
                 throw new ProgrammingLanguageTechnologyAlreadyExistsException();
         }
+
+        public async Task CheckIfAlreadyExistsAsync(ProgrammingLanguageTechnology programmingLanguageTechnology, ProgrammingLanguageTechnology updatedProgrammingLanguageTechnology)
+        {
+            if (programmingLanguageTechnology.ProgrammingLanguageId != updatedProgrammingLanguageTechnology.ProgrammingLanguageId || programmingLanguageTechnology.Name != updatedProgrammingLanguageTechnology.Name)
+                await CheckIfAlreadyExistsAsync(updatedProgrammingLanguageTechnology);
+        }
     }
 }

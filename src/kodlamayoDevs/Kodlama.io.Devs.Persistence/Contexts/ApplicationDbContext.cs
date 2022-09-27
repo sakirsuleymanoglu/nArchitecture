@@ -11,8 +11,8 @@ namespace Kodlama.io.Devs.Persistence.Contexts
 
         }
 
-        public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
-        public DbSet<ProgrammingLanguageTechnology> ProgrammingLanguageTechnologies { get; set; }
+        public DbSet<ProgrammingLanguage> ProgrammingLanguages => Set<ProgrammingLanguage>();
+        public DbSet<ProgrammingLanguageTechnology> ProgrammingLanguageTechnologies => Set<ProgrammingLanguageTechnology>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

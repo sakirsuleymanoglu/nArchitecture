@@ -9,6 +9,7 @@ namespace Kodlama.io.Devs.Persistence.Configurations
         public void Configure(EntityTypeBuilder<ProgrammingLanguage> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasIndex(x => x.Name).IsUnique();
             builder.ToTable("ProgrammingLanguages");
         }
     }
