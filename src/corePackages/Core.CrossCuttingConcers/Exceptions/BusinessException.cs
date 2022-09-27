@@ -1,4 +1,6 @@
-﻿namespace Core.CrossCuttingConcerns.Exceptions;
+﻿using Core.CrossCuttingConcerns.Enumerations;
+
+namespace Core.CrossCuttingConcerns.Exceptions;
 
 public class BusinessException : Exception
 {
@@ -7,10 +9,4 @@ public class BusinessException : Exception
     {
         BusinessExceptionType = businessExceptionType;
     }
-}
-
-public enum BusinessExceptionTypes
-{
-    BadRequest,
-    NotFound
 }

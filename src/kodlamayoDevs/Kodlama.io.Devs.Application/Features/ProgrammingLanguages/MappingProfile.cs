@@ -11,7 +11,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages
         {
             CreateMap<ProgrammingLanguage, CreateProgrammingLanguageCommandResponse>();
             CreateMap<CreateProgrammingLanguageCommandRequest, ProgrammingLanguage>();
-            CreateMap<UpdateProgrammingLanguageCommandRequest, ProgrammingLanguage>();
+            //CreateMap<UpdateProgrammingLanguageCommandRequest, ProgrammingLanguage>();
         }
     }
 }

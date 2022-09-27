@@ -1,15 +1,10 @@
-﻿using FluentValidation;
+﻿using Core.CrossCuttingConcerns.Enumerations;
+using Core.CrossCuttingConcerns.Extensions;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace Core.CrossCuttingConcerns.Exceptions;
-
-
-public static class HttpStatusCodeExtensions
-{
-    public static int ConvertToInt(this HttpStatusCode httpStatusCode) => (int)httpStatusCode;
-}
 
 public class ExceptionMiddleware
 {
@@ -96,7 +91,7 @@ public class ExceptionMiddleware
     {
         context.Response.StatusCode = HttpStatusCode.InternalServerError.ConvertToInt();
 
-        return context.Response.WriteAsync(new ProblemDetails
+        return context.Response.WriteAsync(new InternalServerProblemDetails
         {
             Status = context.Response.StatusCode,
             Type = "https://example.com/probs/internal",
