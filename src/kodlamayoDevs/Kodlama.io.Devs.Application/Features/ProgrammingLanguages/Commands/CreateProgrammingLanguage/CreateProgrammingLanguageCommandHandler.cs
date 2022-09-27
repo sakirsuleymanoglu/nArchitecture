@@ -21,7 +21,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Cre
         {
             ProgrammingLanguage programmingLanguage = _mapper.Map<ProgrammingLanguage>(request);
 
-            await _programmingLanguageRules.CheckIfAlreadyExistsAsync(programmingLanguage.Name);
+            await _programmingLanguageRules.CheckIfAlreadyExistsAsync(programmingLanguage);
 
             ProgrammingLanguage addedProgrammingLanguage = await _programmingLanguageRepository.AddAsync(programmingLanguage);
             return _mapper.Map<CreateProgrammingLanguageCommandResponse>(addedProgrammingLanguage);

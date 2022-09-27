@@ -23,8 +23,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Upd
 
             _programmingLanguageRules.CheckIfExists(programmingLanguage);
 
-            if (request.Name != programmingLanguage!.Name)
-                await _programmingLanguageRules.CheckIfAlreadyExistsAsync(request.Name);
+            await _programmingLanguageRules.CheckIfAlreadyExistsAsync(programmingLanguage!, _mapper.Map<ProgrammingLanguage>(request));
 
             _mapper.Map(request, programmingLanguage);
 
