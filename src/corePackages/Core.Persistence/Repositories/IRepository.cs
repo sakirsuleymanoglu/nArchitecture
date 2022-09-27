@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Core.Persistence.Repositories;
 
-public interface IRepository<T> : IQuery<T> where T : Entity
+public interface IRepository<T> : IQuery<T> where T : class, IEntity, new()
 {
     T Get(Expression<Func<T, bool>> predicate);
 

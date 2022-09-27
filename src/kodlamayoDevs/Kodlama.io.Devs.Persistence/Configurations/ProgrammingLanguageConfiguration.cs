@@ -9,15 +9,6 @@ namespace Kodlama.io.Devs.Persistence.Configurations
         public void Configure(EntityTypeBuilder<ProgrammingLanguage> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.Name).HasMaxLength(50);
-            builder.HasIndex(x => x.Name).IsUnique();
-            builder.HasData(new ProgrammingLanguage
-            {
-                Id = 1,
-                Name = "C#",
-            });
-
             builder.ToTable("ProgrammingLanguages");
         }
     }

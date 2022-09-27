@@ -9,8 +9,6 @@ namespace Kodlama.io.Devs.Persistence.Configurations
         public void Configure(EntityTypeBuilder<ProgrammingLanguageTechnology> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.Name).HasMaxLength(50);
             builder.HasOne(x => x.ProgrammingLanguage).WithMany(x => x.ProgrammingLanguageTechnologies).HasForeignKey(x => x.ProgrammingLanguageId);
             builder.ToTable("ProgrammingLanguageTechnologies");
         }
