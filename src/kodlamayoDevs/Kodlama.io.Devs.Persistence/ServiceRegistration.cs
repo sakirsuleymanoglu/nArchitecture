@@ -11,10 +11,11 @@ namespace Kodlama.io.Devs.Persistence
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
-
             services.AddScoped<IProgrammingLanguageRepository, ProgrammingLanguageRepository>();
             services.AddScoped<IProgrammingLanguageTechnologyRepository, ProgrammingLanguageTechnologyRepository>();
-
+            services.AddScoped<IDeveloperRepository, DeveloperRepository>();
+            services.AddScoped<IDeveloperGithubRepository, DeveloperGithubRepository>();
+            services.AddScoped<IAppUserRepository, AppUserRepository>();
             return services;
         }
     }

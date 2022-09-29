@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Features\DeveloperGithubs\Models\" />
+    <Folder Include="Features\DeveloperGithubs\Queries\" />
     <Folder Include="Features\ProgrammingLanguages\Models\" />
     <Folder Include="Features\ProgrammingLanguages\Queries\" />
     <Folder Include="Features\ProgrammingLanguageTechnologies\Models\" />

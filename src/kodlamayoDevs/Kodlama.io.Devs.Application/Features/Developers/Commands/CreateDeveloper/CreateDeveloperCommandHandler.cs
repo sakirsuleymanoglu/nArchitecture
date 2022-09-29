@@ -1,0 +1,38 @@
+﻿using Core.Security.Hashing;
+using Kodlama.io.Devs.Application.Services.Repositories;
+using Kodlama.io.Devs.Domain.Entities;
+using MediatR;
+
+namespace Kodlama.io.Devs.Application.Features.Developers.Commands.CreateDeveloper
+{
+    public class CreateDeveloperCommandHandler : IRequestHandler<CreateDeveloperCommandRequest, CreateDeveloperCommandResponse>
+    {
+        private readonly IDeveloperRepository _developerRepository;
+        private readonly IAppUserRepository _appUserRepository;
+        public CreateDeveloperCommandHandler(IDeveloperRepository developerRepository, IAppUserRepository appUserRepository)
+        {
+            _developerRepository = developerRepository;
+            _appUserRepository = appUserRepository;
+        }
+        public async Task<CreateDeveloperCommandResponse> Handle(CreateDeveloperCommandRequest request, CancellationToken cancellationToken)
+        {
+            HashingHelper.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+
+            var addedAppUser = await _appUserRepository.AddAsync(new AppUser
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt
+            });
+
+            await _developerRepository.AddAsync(new Developer
+            {
+                Id = addedAppUser.Id
+            });
+
+            return new();
+        }
+    }
+}
