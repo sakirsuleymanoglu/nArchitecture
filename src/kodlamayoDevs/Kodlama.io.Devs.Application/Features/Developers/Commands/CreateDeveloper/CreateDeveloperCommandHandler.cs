@@ -1,4 +1,5 @@
-﻿using Core.Security.Hashing;
+﻿using AutoMapper;
+using Core.Security.Hashing;
 using Kodlama.io.Devs.Application.Services.Repositories;
 using Kodlama.io.Devs.Domain.Entities;
 using MediatR;
@@ -9,22 +10,25 @@ namespace Kodlama.io.Devs.Application.Features.Developers.Commands.CreateDevelop
     {
         private readonly IDeveloperRepository _developerRepository;
         private readonly IAppUserRepository _appUserRepository;
-        public CreateDeveloperCommandHandler(IDeveloperRepository developerRepository, IAppUserRepository appUserRepository)
+        private readonly IMapper _mapper;
+        public CreateDeveloperCommandHandler(IDeveloperRepository developerRepository, IAppUserRepository appUserRepository, IMapper mapper)
         {
             _developerRepository = developerRepository;
             _appUserRepository = appUserRepository;
+            _mapper = mapper;
         }
         public async Task<CreateDeveloperCommandResponse> Handle(CreateDeveloperCommandRequest request, CancellationToken cancellationToken)
         {
             HashingHelper.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            var addedAppUser = await _appUserRepository.AddAsync(new AppUser
+            AppUser addedAppUser = await _appUserRepository.AddAsync(new AppUser
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Email = request.Email,
                 PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt
+                PasswordSalt = passwordSalt,
+                Status = true,
             });
 
             await _developerRepository.AddAsync(new Developer
@@ -32,7 +36,7 @@ namespace Kodlama.io.Devs.Application.Features.Developers.Commands.CreateDevelop
                 Id = addedAppUser.Id
             });
 
-            return new();
+            return _mapper.Map<CreateDeveloperCommandResponse>(addedAppUser);
         }
     }
 }

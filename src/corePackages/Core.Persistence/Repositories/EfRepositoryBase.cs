@@ -17,7 +17,9 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         Context = context;
     }
 
-    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, bool enableTracking = true, bool disableTrackingWithIdentityResolution = false)
+    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool enableTracking = true, bool disableTrackingWithIdentityResolution = false)
     {
         var query = Query();
 
@@ -28,6 +30,9 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
             else
                 query = query.AsNoTracking();
         }
+
+        if (include != null)
+            query = include(query);
 
         return await query.SingleOrDefaultAsync(predicate);
     }
