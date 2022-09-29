@@ -4,6 +4,7 @@ using Kodlama.io.Devs.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Kodlama.io.Devs.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220929130157_mig_1")]
+    partial class mig_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,20 +163,6 @@ namespace Kodlama.io.Devs.Persistence.Migrations
                     b.ToTable("Developers", (string)null);
                 });
 
-            modelBuilder.Entity("Kodlama.io.Devs.Domain.Entities.DeveloperGithub", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DeveloperGithubs");
-                });
-
             modelBuilder.Entity("Kodlama.io.Devs.Domain.Entities.ProgrammingLanguage", b =>
                 {
                     b.Property<int>("Id")
@@ -265,17 +253,6 @@ namespace Kodlama.io.Devs.Persistence.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("Kodlama.io.Devs.Domain.Entities.DeveloperGithub", b =>
-                {
-                    b.HasOne("Kodlama.io.Devs.Domain.Entities.Developer", "Developer")
-                        .WithOne("DeveloperGithub")
-                        .HasForeignKey("Kodlama.io.Devs.Domain.Entities.DeveloperGithub", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Developer");
-                });
-
             modelBuilder.Entity("Kodlama.io.Devs.Domain.Entities.ProgrammingLanguageTechnology", b =>
                 {
                     b.HasOne("Kodlama.io.Devs.Domain.Entities.ProgrammingLanguage", "ProgrammingLanguage")
@@ -292,12 +269,6 @@ namespace Kodlama.io.Devs.Persistence.Migrations
                     b.Navigation("RefreshTokens");
 
                     b.Navigation("UserOperationClaims");
-                });
-
-            modelBuilder.Entity("Kodlama.io.Devs.Domain.Entities.Developer", b =>
-                {
-                    b.Navigation("DeveloperGithub")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Kodlama.io.Devs.Domain.Entities.ProgrammingLanguage", b =>
