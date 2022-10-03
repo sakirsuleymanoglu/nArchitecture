@@ -11,6 +11,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Cre
         private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
         private readonly RuleManager _ruleManager;
         private readonly IMapper _mapper;
+
         public CreateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, IMapper mapper, RuleManager ruleManager)
         {
             _programmingLanguageRepository = programmingLanguageRepository;

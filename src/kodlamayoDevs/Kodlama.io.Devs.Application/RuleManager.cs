@@ -19,30 +19,26 @@ namespace Kodlama.io.Devs.Application
 
         public void CheckIfExists<TException>(Func<object?> operation) where TException : NotFoundException, new()
         {
-            var result = operation.Invoke();
-            if (result == null)
+            if (operation.Invoke() == null)
                 throw new TException();
         }
 
         public async Task CheckIfExistsAsync<TException>(Func<Task<object?>> operation) where TException : NotFoundException, new()
         {
-            var result = await operation.Invoke();
-            if (result == null)
+            if (await operation.Invoke() == null)
                 throw new TException();
         }
 
         public void CheckIfAlreadyExists<TException>(Func<object?> operation) where TException : BadRequestException, new()
         {
-            var result = operation.Invoke();
-            if (result != null)
+            if (operation.Invoke() != null)
                 throw new TException();
         }
 
 
         public async Task CheckIfAlreadyExistsAsync<TException>(Func<Task<object?>> operation) where TException : BadRequestException, new()
         {
-            object? result = await operation.Invoke();
-            if (result != null)
+            if (await operation.Invoke() != null)
                 throw new TException();
         }
     }

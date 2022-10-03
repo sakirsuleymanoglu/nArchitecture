@@ -6,7 +6,7 @@ namespace Core.Persistence.Repositories;
 
 public interface IRepository<T> : IQuery<T> where T : class, IEntity, new()
 {
-    T Get(Expression<Func<T, bool>> predicate);
+    T? Get(Expression<Func<T, bool>> predicate);
 
     IPaginate<T> GetList(Expression<Func<T, bool>>? predicate = null,
                          Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,

@@ -37,11 +37,11 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return await query.SingleOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public async Task<IEnumerable<TEntity>> GetListWithoutPaginateAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool tracking = false, bool disableTrackingWithIdentityResolution = false, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<TEntity>> GetListWithoutPaginateAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = false, bool disableTrackingWithIdentityResolution = false, CancellationToken cancellationToken = default)
     {
         IQueryable<TEntity> query = Query();
 
-        if (!tracking)
+        if (!enableTracking)
         {
             if (disableTrackingWithIdentityResolution)
                 query = query.AsNoTrackingWithIdentityResolution();
@@ -89,10 +89,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return await queryable.ToPaginateAsync(index, size, 0, cancellationToken);
     }
 
-    public IQueryable<TEntity> Query()
-    {
-        return Context.Set<TEntity>();
-    }
+    public IQueryable<TEntity> Query() => Context.Set<TEntity>();
 
     public async Task<TEntity> AddAsync(TEntity entity)
     {
@@ -116,10 +113,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return entity;
     }
 
-    public TEntity? Get(Expression<Func<TEntity, bool>> predicate)
-    {
-        return Context.Set<TEntity>().FirstOrDefault(predicate);
-    }
+    public TEntity? Get(Expression<Func<TEntity, bool>> predicate) => Context.Set<TEntity>().FirstOrDefault(predicate);
 
     public IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null,
                                       Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,

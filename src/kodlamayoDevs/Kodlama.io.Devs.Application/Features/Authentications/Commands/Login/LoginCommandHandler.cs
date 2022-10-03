@@ -33,7 +33,7 @@ namespace Kodlama.io.Devs.Application.Features.Authentications.Commands.Login
             if (!verifyPasswordHashResult)
                 throw new Exception("");
 
-            IEnumerable<UserOperationClaim> userOperationClaims = await _userOperationClaimRepository.GetListWithoutPaginateAsync(x => x.UserId == user.Id, include: x => x.Include(x => x.OperationClaim), tracking: false, disableTrackingWithIdentityResolution: true);
+            IEnumerable<UserOperationClaim> userOperationClaims = await _userOperationClaimRepository.GetListWithoutPaginateAsync(x => x.UserId == user.Id, include: x => x.Include(x => x.OperationClaim), enableTracking: false, disableTrackingWithIdentityResolution: true);
 
             AccessToken accessToken = _tokenHelper.CreateToken(user, userOperationClaims.Select(x => new OperationClaim { Id = x.OperationClaim.Id, Name = x.OperationClaim.Name }).ToList());
 
