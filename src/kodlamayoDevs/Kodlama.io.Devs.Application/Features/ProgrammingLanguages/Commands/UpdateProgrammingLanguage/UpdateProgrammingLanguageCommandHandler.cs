@@ -20,7 +20,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Upd
 
         public async Task<Unit> Handle(UpdateProgrammingLanguageCommandRequest request, CancellationToken cancellationToken)
         {
-            ProgrammingLanguage? programmingLanguage = await _programmingLanguageRepository.GetAsync(x => x.Id == request.Id, enableTracking: false);
+            ProgrammingLanguage? programmingLanguage = await _programmingLanguageRepository.GetAsync(x => x.Id == request.Id, tracking: false);
 
             _ruleManager.CheckIfExists<ProgrammingLanguageNotFoundException>(operation: () => programmingLanguage);
 

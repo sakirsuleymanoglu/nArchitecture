@@ -19,7 +19,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Queries.GetB
         }
         public async Task<GetByIdProgrammingLanguageQueryResponse> Handle(GetByIdProgrammingLanguageQueryRequest request, CancellationToken cancellationToken)
         {
-            ProgrammingLanguage? programmingLanguage = await _programmingLanguageRepository.GetAsync(x => x.Id == request.Id, enableTracking: false);
+            ProgrammingLanguage? programmingLanguage = await _programmingLanguageRepository.GetAsync(x => x.Id == request.Id, tracking: false);
 
             _ruleManager.CheckIfExists<ProgrammingLanguageNotFoundException>(operation: () => programmingLanguage);
 

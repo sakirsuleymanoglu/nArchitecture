@@ -21,7 +21,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguageTechnologies.C
 
         public async Task<Unit> Handle(UpdateProgrammingLanguageTechnologyCommandRequest request, CancellationToken cancellationToken)
         {
-            ProgrammingLanguageTechnology? programmingLanguageTechnology = await _programmingLanguageTechnologyRepository.GetAsync(x => x.Id == request.Id, enableTracking: false);
+            ProgrammingLanguageTechnology? programmingLanguageTechnology = await _programmingLanguageTechnologyRepository.GetAsync(x => x.Id == request.Id, tracking: false);
 
             _ruleManager.CheckIfExists<ProgrammingLanguageTechnologyNotFoundException>(() => programmingLanguageTechnology);
 

@@ -24,7 +24,7 @@ namespace Kodlama.io.Devs.Application.Features.Authentications.Commands.Login
         }
         public async Task<LoginCommandResponse> Handle(LoginCommandRequest request, CancellationToken cancellationToken)
         {
-            AppUser? user = await _appUserRepository.GetAsync(x => x.Email == request.Email, enableTracking: false);
+            AppUser? user = await _appUserRepository.GetAsync(x => x.Email == request.Email, tracking: false);
 
             if (user == null)
                 throw new Exception();
@@ -33,7 +33,7 @@ namespace Kodlama.io.Devs.Application.Features.Authentications.Commands.Login
             if (!verifyPasswordHashResult)
                 throw new Exception("");
 
-            IEnumerable<UserOperationClaim> userOperationClaims = await _userOperationClaimRepository.GetListWithoutPaginateAsync(x => x.UserId == user.Id, include: x => x.Include(x => x.OperationClaim), enableTracking: false, disableTrackingWithIdentityResolution: true);
+            IEnumerable<UserOperationClaim> userOperationClaims = await _userOperationClaimRepository.GetListWithoutPaginateAsync(x => x.UserId == user.Id, include: x => x.Include(x => x.OperationClaim), tracking: false, disableTrackingWithIdentityResolution: true);
 
             AccessToken accessToken = _tokenHelper.CreateToken(user, userOperationClaims.Select(x => new OperationClaim { Id = x.OperationClaim.Id, Name = x.OperationClaim.Name }).ToList());
 
@@ -41,7 +41,7 @@ namespace Kodlama.io.Devs.Application.Features.Authentications.Commands.Login
 
             RefreshToken refreshToken = _tokenHelper.CreateRefreshToken(user, ipAddress?.ToString() ?? string.Empty);
 
-            RefreshToken? userRefreshToken = await _refreshTokenRepository.GetAsync(x => x.UserId == user.Id, enableTracking: false);
+            RefreshToken? userRefreshToken = await _refreshTokenRepository.GetAsync(x => x.UserId == user.Id, tracking: false);
 
             if (userRefreshToken != null)
                 await _refreshTokenRepository.AddAsync(refreshToken);
