@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Kodlama.io.Devs.Application.Exceptions.ProgrammingLanguages;
 using Kodlama.io.Devs.Application.Services.Repositories;
 using Kodlama.io.Devs.Domain.Entities;
 using MediatR;
@@ -8,12 +9,12 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Upd
     public class UpdateProgrammingLanguageCommandHandler : IRequestHandler<UpdateProgrammingLanguageCommandRequest>
     {
         private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
-        private readonly ProgrammingLanguageRules _programmingLanguageRules;
+        private readonly RuleManager _ruleManager;
         private readonly IMapper _mapper;
-        public UpdateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, ProgrammingLanguageRules programmingLanguageRules, IMapper mapper)
+        public UpdateProgrammingLanguageCommandHandler(IProgrammingLanguageRepository programmingLanguageRepository, RuleManager ruleManager, IMapper mapper)
         {
             _programmingLanguageRepository = programmingLanguageRepository;
-            _programmingLanguageRules = programmingLanguageRules;
+            _ruleManager = ruleManager;
             _mapper = mapper;
         }
 
@@ -21,9 +22,15 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Upd
         {
             ProgrammingLanguage? programmingLanguage = await _programmingLanguageRepository.GetAsync(x => x.Id == request.Id, enableTracking: false);
 
-            _programmingLanguageRules.CheckIfExists(programmingLanguage);
+            _ruleManager.CheckIfExists<ProgrammingLanguageNotFoundException>(operation: () => programmingLanguage);
 
-            await _programmingLanguageRules.CheckIfAlreadyExistsAsync(programmingLanguage!, _mapper.Map<ProgrammingLanguage>(request));
+            await _ruleManager.CheckIfAlreadyExistsAsync<ProgrammingLanguageAlreadyExistsException>(operation: async () =>
+            {
+                if (programmingLanguage!.Name != request.Name)
+                    return await _programmingLanguageRepository.GetAsync(x => x.Name == request.Name);
+
+                return null;
+            });
 
             _mapper.Map(request, programmingLanguage);
 

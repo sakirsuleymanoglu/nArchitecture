@@ -2,6 +2,7 @@
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLanguage;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.DeleteProgrammingLanguage;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.UpdateProgrammingLanguage;
+using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Queries.GetByIdProgrammingLanguage;
 using Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Queries.GetListProgrammingLanguage;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,7 +23,9 @@ namespace Kodlama.io.Devs.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok();
+            GetByIdProgrammingLanguageQueryRequest request = new() { Id = id };
+            GetByIdProgrammingLanguageQueryResponse response = await SendRequestAsync(request);
+            return Ok(response);
         }
 
         [HttpPost]

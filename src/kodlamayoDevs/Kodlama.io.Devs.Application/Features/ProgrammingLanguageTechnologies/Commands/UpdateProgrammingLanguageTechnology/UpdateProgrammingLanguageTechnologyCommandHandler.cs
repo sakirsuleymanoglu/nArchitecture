@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Kodlama.io.Devs.Application.Exceptions.ProgrammingLanguageTechnologies;
 using Kodlama.io.Devs.Application.Services.Repositories;
 using Kodlama.io.Devs.Domain.Entities;
 using MediatR;
@@ -8,13 +9,13 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguageTechnologies.C
     public class UpdateProgrammingLanguageTechnologyCommandHandler : IRequestHandler<UpdateProgrammingLanguageTechnologyCommandRequest>
     {
         private readonly IProgrammingLanguageTechnologyRepository _programmingLanguageTechnologyRepository;
-        private readonly ProgrammingLanguageTechnologyRules _programmingLanguageTechnologyRules;
+        private readonly RuleManager _ruleManager;
         private readonly IMapper _mapper;
 
-        public UpdateProgrammingLanguageTechnologyCommandHandler(IProgrammingLanguageTechnologyRepository programmingLanguageTechnologyRepository, ProgrammingLanguageTechnologyRules programmingLanguageTechnologyRules, IMapper mapper)
+        public UpdateProgrammingLanguageTechnologyCommandHandler(IProgrammingLanguageTechnologyRepository programmingLanguageTechnologyRepository, RuleManager ruleManager, IMapper mapper)
         {
             _programmingLanguageTechnologyRepository = programmingLanguageTechnologyRepository;
-            _programmingLanguageTechnologyRules = programmingLanguageTechnologyRules;
+            _ruleManager = ruleManager;
             _mapper = mapper;
         }
 
@@ -22,9 +23,15 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguageTechnologies.C
         {
             ProgrammingLanguageTechnology? programmingLanguageTechnology = await _programmingLanguageTechnologyRepository.GetAsync(x => x.Id == request.Id, enableTracking: false);
 
-            _programmingLanguageTechnologyRules.CheckIfExists(programmingLanguageTechnology);
+            _ruleManager.CheckIfExists<ProgrammingLanguageTechnologyNotFoundException>(() => programmingLanguageTechnology);
 
-            await _programmingLanguageTechnologyRules.CheckIfAlreadyExistsAsync(programmingLanguageTechnology!, _mapper.Map<ProgrammingLanguageTechnology>(request));
+            await _ruleManager.CheckIfAlreadyExistsAsync<ProgrammingLanguageTechnologyAlreadyExistsException>(operation: async () =>
+            {
+                if (request.ProgrammingLanguageId != programmingLanguageTechnology!.ProgrammingLanguageId || request.Name != programmingLanguageTechnology.Name)
+                    return await _programmingLanguageTechnologyRepository.GetAsync(x => x.Name == request.Name && x.ProgrammingLanguageId == request.ProgrammingLanguageId);
+
+                return null;
+            });
 
             _mapper.Map(request, programmingLanguageTechnology);
 
