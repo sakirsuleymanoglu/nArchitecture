@@ -1,4 +1,5 @@
 ﻿using Core.Security.Entities;
+using Kodlama.io.Devs.Persistence.Enumerations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -11,7 +12,7 @@ namespace Kodlama.io.Devs.Persistence.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasColumnName("Id");
             builder.Property(x => x.Name).HasColumnName("Name");
-            builder.ToTable("OperationClaims");
+            builder.ToTable(Entities.OperationClaim.GetTableName());
         }
     }
 }

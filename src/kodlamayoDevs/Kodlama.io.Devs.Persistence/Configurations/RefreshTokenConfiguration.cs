@@ -1,4 +1,5 @@
 ﻿using Core.Security.Entities;
+using Kodlama.io.Devs.Persistence.Enumerations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,7 +10,7 @@ namespace Kodlama.io.Devs.Persistence.Configurations
         public void Configure(EntityTypeBuilder<RefreshToken> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.ToTable("RefreshTokens");
+            builder.ToTable(Entities.RefreshToken.GetTableName());
         }
     }
 }

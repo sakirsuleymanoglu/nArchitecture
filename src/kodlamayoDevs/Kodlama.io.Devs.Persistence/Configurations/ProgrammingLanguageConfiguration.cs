@@ -1,4 +1,5 @@
 ﻿using Kodlama.io.Devs.Domain.Entities;
+using Kodlama.io.Devs.Persistence.Enumerations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -10,7 +11,7 @@ namespace Kodlama.io.Devs.Persistence.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.HasIndex(x => x.Name).IsUnique();
-            builder.ToTable("ProgrammingLanguages");
+            builder.ToTable(Entities.ProgrammingLanguage.GetTableName());
         }
     }
 }
