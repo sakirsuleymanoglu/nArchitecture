@@ -24,8 +24,8 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguageTechnologies.C
 
             await _ruleManager.CheckIfAlreadyExistsAsync<ProgrammingLanguageTechnologyAlreadyExistsException>(operation: async () => await _programmingLanguageTechnologyRepository.GetAsync(x => x.Name == request.Name && x.ProgrammingLanguageId == request.ProgrammingLanguageId));
 
-            ProgrammingLanguageTechnology addedProgrammingLanguageTechnology = await _programmingLanguageTechnologyRepository.AddAsync(programmingLanguageTechnology);
-            return _mapper.Map<CreateProgrammingLanguageTechnologyCommandResponse>(addedProgrammingLanguageTechnology);
+            ProgrammingLanguageTechnology createdProgrammingLanguageTechnology = await _programmingLanguageTechnologyRepository.AddAsync(programmingLanguageTechnology);
+            return _mapper.Map<CreateProgrammingLanguageTechnologyCommandResponse>(createdProgrammingLanguageTechnology);
         }
     }
 }
