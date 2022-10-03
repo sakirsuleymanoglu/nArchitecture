@@ -4,21 +4,21 @@ using System.Linq.Expressions;
 
 namespace Core.Persistence.Repositories;
 
-public interface IRepository<T> : IQuery<T> where T : class, IEntity, new()
+public interface IRepository<TEntity> : IQuery<TEntity> where TEntity : class, IEntity, new()
 {
-    T? Get(Expression<Func<T, bool>> predicate);
+    TEntity? Get(Expression<Func<TEntity, bool>> predicate);
 
-    IPaginate<T> GetList(Expression<Func<T, bool>>? predicate = null,
-                         Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-                         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+    IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null,
+                         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+                         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
                          int index = 0, int size = 10,
                          bool enableTracking = true);
 
-    IPaginate<T> GetListByDynamic(Dynamic.Dynamic dynamic,
-                                  Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+    IPaginate<TEntity> GetListByDynamic(Dynamic.Dynamic dynamic,
+                                  Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
                                   int index = 0, int size = 10, bool enableTracking = true);
 
-    T Add(T entity);
-    T Update(T entity);
-    T Delete(T entity);
+    TEntity Add(TEntity entity);
+    TEntity Update(TEntity entity);
+    TEntity Delete(TEntity entity);
 }

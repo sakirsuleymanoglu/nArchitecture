@@ -1,6 +1,6 @@
 ﻿namespace Core.Persistence.Repositories;
 
-public interface IQuery<T> where T : class, IEntity, new()
+public interface IQuery<TEntity> where TEntity : class, IEntity, new()
 {
-    IQueryable<T> Query();
+    IQueryable<TEntity> Query();
 }

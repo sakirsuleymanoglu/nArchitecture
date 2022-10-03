@@ -4,26 +4,26 @@ using System.Linq.Expressions;
 
 namespace Core.Persistence.Repositories;
 
-public interface IAsyncRepository<T> : IQuery<T> where T : class, IEntity, new()
+public interface IAsyncRepository<TEntity> : IQuery<TEntity> where TEntity : class, IEntity, new()
 {
-    Task<T?> GetAsync(Expression<Func<T, bool>> predicate,
-        Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+    Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         bool enableTracking = true, bool disableTrackingWithIdentityResolution = false, CancellationToken cancellationToken = default);
-    Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
+    Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<T>> GetListWithoutPaginateAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, bool enableTracking = false, bool disableTrackingWithIdentityResolution = false, CancellationToken cancellationToken = default);
-    Task<IPaginate<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null,
-                                    Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-                                    Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+    Task<IEnumerable<TEntity>> GetListWithoutPaginateAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool enableTracking = false, bool disableTrackingWithIdentityResolution = false, CancellationToken cancellationToken = default);
+    Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
+                                    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+                                    Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
                                     int index = 0, int size = 10, bool enableTracking = true,
                                     CancellationToken cancellationToken = default);
 
-    Task<IPaginate<T>> GetListByDynamicAsync(Dynamic.Dynamic dynamic,
-                                             Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
+    Task<IPaginate<TEntity>> GetListByDynamicAsync(Dynamic.Dynamic dynamic,
+                                             Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
                                              int index = 0, int size = 10, bool enableTracking = true,
                                              CancellationToken cancellationToken = default);
 
-    Task<T> AddAsync(T entity);
-    Task<T> UpdateAsync(T entity);
-    Task<T> DeleteAsync(T entity);
+    Task<TEntity> AddAsync(TEntity entity);
+    Task<TEntity> UpdateAsync(TEntity entity);
+    Task<TEntity> DeleteAsync(TEntity entity);
 }
