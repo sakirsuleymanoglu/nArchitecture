@@ -19,7 +19,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
 
     public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
-        bool enableTracking = true, bool disableTrackingWithIdentityResolution = false)
+        bool enableTracking = true, bool disableTrackingWithIdentityResolution = false, CancellationToken cancellationToken = default)
     {
         var query = Query();
 
@@ -34,7 +34,28 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         if (include != null)
             query = include(query);
 
-        return await query.SingleOrDefaultAsync(predicate);
+        return await query.SingleOrDefaultAsync(predicate, cancellationToken);
+    }
+
+    public async Task<IEnumerable<TEntity>> GetListWithoutPaginateAsync(Expression<Func<TEntity, bool>>? predicate = null, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null, bool tracking = false, bool disableTrackingWithIdentityResolution = false, CancellationToken cancellationToken = default)
+    {
+        IQueryable<TEntity> query = Query();
+
+        if (!tracking)
+        {
+            if (disableTrackingWithIdentityResolution)
+                query = query.AsNoTrackingWithIdentityResolution();
+            else
+                query = query.AsNoTracking();
+        }
+
+        if (predicate != null)
+            query = query.Where(predicate);
+
+        if (include != null)
+            query = include(query);
+
+        return await query.ToListAsync(cancellationToken);
     }
 
     public async Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
@@ -147,5 +168,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         return entity;
     }
 
-    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate) => await Query().AnyAsync(predicate);
+    public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) => await Query().AnyAsync(predicate, cancellationToken);
+
+
 }

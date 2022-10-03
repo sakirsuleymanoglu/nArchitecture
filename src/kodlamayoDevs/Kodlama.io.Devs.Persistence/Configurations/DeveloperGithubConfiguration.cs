@@ -10,6 +10,7 @@ namespace Kodlama.io.Devs.Persistence.Configurations
         {
             builder.HasKey(x => x.Id);
             builder.HasOne(x => x.Developer).WithOne(x => x.DeveloperGithub).HasForeignKey<DeveloperGithub>(x => x.Id);
+            builder.ToTable("DeveloperGithubs");
         }
     }
 }

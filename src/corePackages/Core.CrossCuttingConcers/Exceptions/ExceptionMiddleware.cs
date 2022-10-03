@@ -42,7 +42,7 @@ public class ExceptionMiddleware
 
     private Task CreateAuthorizationException(HttpContext context, Exception exception)
     {
-        context.Response.StatusCode = HttpStatusCode.Unauthorized.ConvertToInt();
+        context.Response.StatusCode = HttpStatusCode.Unauthorized.GetCode();
 
         return context.Response.WriteAsync(new AuthorizationProblemDetails
         {
@@ -57,9 +57,7 @@ public class ExceptionMiddleware
     private Task CreateBusinessException(HttpContext context, Exception exception)
     {
         if (exception is BusinessException businessException)
-            context.Response.StatusCode = businessException.BusinessExceptionType == BusinessExceptionTypes.NotFound ? HttpStatusCode.NotFound.ConvertToInt() : HttpStatusCode.BadRequest.ConvertToInt();
-        else
-            context.Response.StatusCode = HttpStatusCode.BadRequest.ConvertToInt();
+            context.Response.StatusCode = businessException.BusinessExceptionType == BusinessExceptionTypes.NotFound ? HttpStatusCode.NotFound.GetCode() : HttpStatusCode.BadRequest.GetCode();
 
         return context.Response.WriteAsync(new BusinessProblemDetails
         {
@@ -73,7 +71,7 @@ public class ExceptionMiddleware
 
     private Task CreateValidationException(HttpContext context, Exception exception)
     {
-        context.Response.StatusCode = HttpStatusCode.BadRequest.ConvertToInt();
+        context.Response.StatusCode = HttpStatusCode.BadRequest.GetCode();
         object errors = ((ValidationException)exception).Errors;
 
         return context.Response.WriteAsync(new ValidationProblemDetails
@@ -89,7 +87,7 @@ public class ExceptionMiddleware
 
     private Task CreateInternalException(HttpContext context, Exception exception)
     {
-        context.Response.StatusCode = HttpStatusCode.InternalServerError.ConvertToInt();
+        context.Response.StatusCode = HttpStatusCode.InternalServerError.GetCode();
 
         return context.Response.WriteAsync(new InternalServerProblemDetails
         {

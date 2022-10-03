@@ -4,6 +4,6 @@ namespace Core.CrossCuttingConcerns.Extensions
 {
     public static class HttpStatusCodeExtensions
     {
-        public static int ConvertToInt(this HttpStatusCode httpStatusCode) => (int)httpStatusCode;
+        public static int GetCode(this HttpStatusCode httpStatusCode) => (int)httpStatusCode;
     }
 }

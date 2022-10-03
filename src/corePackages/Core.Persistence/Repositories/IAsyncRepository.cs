@@ -8,9 +8,10 @@ public interface IAsyncRepository<T> : IQuery<T> where T : class, IEntity, new()
 {
     Task<T?> GetAsync(Expression<Func<T, bool>> predicate,
         Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,
-        bool enableTracking = true, bool disableTrackingWithIdentityResolution = false);
-    Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
+        bool enableTracking = true, bool disableTrackingWithIdentityResolution = false, CancellationToken cancellationToken = default);
+    Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
 
+    Task<IEnumerable<T>> GetListWithoutPaginateAsync(Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, bool tracking = false, bool disableTrackingWithIdentityResolution = false, CancellationToken cancellationToken = default);
     Task<IPaginate<T>> GetListAsync(Expression<Func<T, bool>>? predicate = null,
                                     Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
                                     Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null,

@@ -1,11 +1,8 @@
-﻿using Core.CrossCuttingConcerns.Enumerations;
-using Core.CrossCuttingConcerns.Exceptions;
-
-namespace Kodlama.io.Devs.Application.Exceptions.ProgrammingLanguages
+﻿namespace Kodlama.io.Devs.Application.Exceptions.ProgrammingLanguages
 {
-    public class ProgrammingLanguageNotFoundException : BusinessException
+    public class ProgrammingLanguageNotFoundException : NotFoundException
     {
-        public ProgrammingLanguageNotFoundException() : base("Programming language not found", BusinessExceptionTypes.NotFound)
+        public ProgrammingLanguageNotFoundException() : base("Programming language not found")
         {
 
         }
