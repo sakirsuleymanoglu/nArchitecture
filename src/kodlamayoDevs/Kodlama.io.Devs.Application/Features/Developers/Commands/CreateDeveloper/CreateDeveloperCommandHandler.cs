@@ -23,8 +23,6 @@ namespace Kodlama.io.Devs.Application.Features.Developers.Commands.CreateDevelop
 
             AppUser addedAppUser = await _appUserRepository.AddAsync(new AppUser
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
                 Email = request.Email,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
