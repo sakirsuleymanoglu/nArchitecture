@@ -9,8 +9,12 @@ namespace Kodlama.io.Devs.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ProgrammingLanguage> builder)
         {
-            builder.HasKey(x => x.Id);
-            builder.HasIndex(x => x.Name).IsUnique();
+            builder.HasKey(ProgrammingLanguageProperties.Id.GetExpression());
+            builder.Property(ProgrammingLanguageProperties.Id.GetExpression()).HasColumnName(ProgrammingLanguageProperties.Id.GetColumnName());
+
+            builder.Property(ProgrammingLanguageProperties.Name.GetExpression()).HasColumnName(ProgrammingLanguageProperties.Name.GetColumnName());
+            builder.HasIndex(ProgrammingLanguageProperties.Name.GetExpression()).IsUnique();
+
             builder.ToTable(Entities.ProgrammingLanguage.GetTableName());
         }
     }
