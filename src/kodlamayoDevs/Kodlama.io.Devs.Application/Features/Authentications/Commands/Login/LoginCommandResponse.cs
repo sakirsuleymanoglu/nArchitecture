@@ -1,8 +1,11 @@
-﻿namespace Kodlama.io.Devs.Application.Features.Authentications.Commands.Login
+﻿using Core.Security.Entities;
+using Core.Security.JWT;
+
+namespace Kodlama.io.Devs.Application.Features.Authentications.Commands.Login
 {
     public class LoginCommandResponse
     {
-        public string AcessToken { get; set; }
-        public string RefreshToken { get; set; }
+        public AccessToken AcessToken { get; set; }
+        public RefreshToken RefreshToken { get; set; }
     }
 }

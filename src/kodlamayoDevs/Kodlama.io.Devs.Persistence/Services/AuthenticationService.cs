@@ -2,6 +2,7 @@
 using Core.Security.Entities;
 using Core.Security.Hashing;
 using Kodlama.io.Devs.Application;
+using Kodlama.io.Devs.Application.Exceptions.Authentications;
 using Kodlama.io.Devs.Application.Exceptions.Users;
 using Kodlama.io.Devs.Application.Services;
 using Kodlama.io.Devs.Application.Services.Repositories;
@@ -38,6 +39,17 @@ namespace Kodlama.io.Devs.Persistence.Services
             };
 
             return await _appUserRepository.AddAsync(user);
+        }
+
+        public async Task<User> LoginAsync(UserForLoginDto userForLoginDto)
+        {
+            User? user = await _appUserRepository.GetAsync(x => x.Email == userForLoginDto.Email, tracking: false);
+
+            _ruleManager.CheckIfExists<UserNotFoundException>(operation: () => user);
+
+            _ruleManager.CheckWithAnyRule<IncorrectLoginException>(operation: () => HashingHelper.VerifyPasswordHash(userForLoginDto.Password, user!.PasswordHash, user.PasswordSalt));
+
+            return user!;
         }
     }
 }
