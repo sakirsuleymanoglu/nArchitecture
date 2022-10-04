@@ -22,28 +22,22 @@ namespace Kodlama.io.Devs.Domain.Entities
 
     public static class DeveloperPropertiesExtensions
     {
-        public static string GetColumnName(this DeveloperProperties developerProperty)
+        public static string GetColumnName(this DeveloperProperties developerProperty) => developerProperty switch
         {
-            return developerProperty switch
-            {
-                DeveloperProperties.Id => "Id",
-                DeveloperProperties.FirstName => "FirstName",
-                DeveloperProperties.LastName => "LastName",
-                DeveloperProperties.PhoneNumber => "PhoneNumber",
-                _ => throw new Exception("property not found in developer entity"),
-            };
-        }
+            DeveloperProperties.Id => "Id",
+            DeveloperProperties.FirstName => "FirstName",
+            DeveloperProperties.LastName => "LastName",
+            DeveloperProperties.PhoneNumber => "PhoneNumber",
+            _ => throw new Exception("property not found in developer entity"),
+        };
 
-        public static Expression<Func<Developer, object?>> GetExpression(this DeveloperProperties developerProperty)
+        public static Expression<Func<Developer, object?>> GetExpression(this DeveloperProperties developerProperty) => developerProperty switch
         {
-            return developerProperty switch
-            {
-                DeveloperProperties.Id => (x => x.Id),
-                DeveloperProperties.FirstName => (x => x.FirstName),
-                DeveloperProperties.LastName => (x => x.LastName),
-                DeveloperProperties.PhoneNumber => (x => x.PhoneNumber),
-                _ => throw new Exception("property not found in developer entity"),
-            };
-        }
+            DeveloperProperties.Id => (x => x.Id),
+            DeveloperProperties.FirstName => (x => x.FirstName),
+            DeveloperProperties.LastName => (x => x.LastName),
+            DeveloperProperties.PhoneNumber => (x => x.PhoneNumber),
+            _ => throw new Exception("property not found in developer entity"),
+        };
     }
 }
