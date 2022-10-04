@@ -1,4 +1,5 @@
 ﻿using Core.Persistence.Repositories;
+using System.Linq.Expressions;
 
 namespace Core.Security.Entities;
 
@@ -19,4 +20,30 @@ public class UserOperationClaim : Entity
         UserId = userId;
         OperationClaimId = operationClaimId;
     }
+}
+
+public enum UserOperationClaimProperties
+{
+    Id,
+    UserId,
+    OperationClaimId,
+}
+
+public static class UserOperationClaimPropertiesExtensions
+{
+    public static string GetColumnName(this UserOperationClaimProperties userOperationClaimProperty) => userOperationClaimProperty switch
+    {
+        UserOperationClaimProperties.Id => "Id",
+        UserOperationClaimProperties.UserId => "UserId",
+        UserOperationClaimProperties.OperationClaimId => "OperationClaimId",
+        _ => throw new Exception("property not found in user operation claim entity"),
+    };
+
+    public static Expression<Func<UserOperationClaim, object?>> GetExpression(this UserOperationClaimProperties userOperationClaimProperty) => userOperationClaimProperty switch
+    {
+        UserOperationClaimProperties.Id => (x => x.Id),
+        UserOperationClaimProperties.UserId => (x => x.UserId),
+        UserOperationClaimProperties.OperationClaimId => (x => x.OperationClaimId),
+        _ => throw new Exception("property not found in user operation claim entity"),
+    };
 }

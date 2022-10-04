@@ -18,6 +18,7 @@ namespace Kodlama.io.Devs.Persistence.Configurations
             builder.Property(ProgrammingLanguageTechnologyProperties.ProgrammingLanguageId.GetExpression()).HasColumnName(ProgrammingLanguageTechnologyProperties.ProgrammingLanguageId.GetColumnName());
 
             builder.HasOne(x => x.ProgrammingLanguage).WithMany(x => x.ProgrammingLanguageTechnologies).HasForeignKey(x => x.ProgrammingLanguageId);
+
             builder.ToTable(Entities.ProgrammingLanguageTechnology.GetTableName());
         }
     }

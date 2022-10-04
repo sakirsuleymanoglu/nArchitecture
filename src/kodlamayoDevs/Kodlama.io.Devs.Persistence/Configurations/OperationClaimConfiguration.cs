@@ -9,9 +9,9 @@ namespace Kodlama.io.Devs.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<OperationClaim> builder)
         {
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasColumnName("Id");
-            builder.Property(x => x.Name).HasColumnName("Name");
+            builder.HasKey(OperationClaimProperties.Id.GetExpression());
+            builder.Property(OperationClaimProperties.Id.GetExpression()).HasColumnName(OperationClaimProperties.Id.GetColumnName());
+            builder.Property(OperationClaimProperties.Name.GetExpression()).HasColumnName(OperationClaimProperties.Name.GetColumnName());
             builder.ToTable(Entities.OperationClaim.GetTableName());
         }
     }

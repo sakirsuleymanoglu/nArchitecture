@@ -31,6 +31,8 @@ namespace Kodlama.io.Devs.Application.Features.Developers.Commands.CreateDevelop
 
             await _developerRepository.AddAsync(new Developer
             {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
                 Id = addedAppUser.Id
             });
 
