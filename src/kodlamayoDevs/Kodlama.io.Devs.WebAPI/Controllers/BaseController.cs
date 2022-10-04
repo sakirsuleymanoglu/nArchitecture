@@ -13,5 +13,12 @@ namespace Kodlama.io.Devs.WebAPI.Controllers
                 throw new Exception("Mediator is null");
             return await Mediator.Send(request);
         }
+
+        protected string? GetIpAddress()
+        {
+            if (Request.Headers.ContainsKey("X-Forward-For"))
+                return Request.Headers["X-Forward-For"];
+            return HttpContext.Connection.RemoteIpAddress?.MapToIPv4().ToString();
+        }
     }
 }

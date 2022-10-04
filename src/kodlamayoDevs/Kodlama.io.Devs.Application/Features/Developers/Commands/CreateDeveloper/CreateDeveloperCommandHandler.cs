@@ -1,5 +1,6 @@
-﻿using AutoMapper;
-using Core.Security.Hashing;
+﻿using Core.Security.Entities;
+using Core.Security.JWT;
+using Kodlama.io.Devs.Application.Services;
 using Kodlama.io.Devs.Application.Services.Repositories;
 using Kodlama.io.Devs.Domain.Entities;
 using MediatR;
@@ -8,35 +9,40 @@ namespace Kodlama.io.Devs.Application.Features.Developers.Commands.CreateDevelop
 {
     public class CreateDeveloperCommandHandler : IRequestHandler<CreateDeveloperCommandRequest, CreateDeveloperCommandResponse>
     {
+        private readonly IAuthenticationService _authenticationService;
+        private readonly IAccessTokenService _accessTokenService;
+        private readonly IRefreshTokenService _refreshTokenService;
         private readonly IDeveloperRepository _developerRepository;
-        private readonly IAppUserRepository _appUserRepository;
-        private readonly IMapper _mapper;
-        public CreateDeveloperCommandHandler(IDeveloperRepository developerRepository, IAppUserRepository appUserRepository, IMapper mapper)
+        public CreateDeveloperCommandHandler(IAuthenticationService authenticationService, IAccessTokenService accessTokenService, IRefreshTokenService refreshTokenService, IDeveloperRepository developerRepository)
         {
+            _authenticationService = authenticationService;
+            _accessTokenService = accessTokenService;
+            _refreshTokenService = refreshTokenService;
             _developerRepository = developerRepository;
-            _appUserRepository = appUserRepository;
-            _mapper = mapper;
         }
         public async Task<CreateDeveloperCommandResponse> Handle(CreateDeveloperCommandRequest request, CancellationToken cancellationToken)
         {
-            HashingHelper.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
-
-            AppUser addedAppUser = await _appUserRepository.AddAsync(new AppUser
+            User user = await _authenticationService.RegisterAsync(new()
             {
                 Email = request.Email,
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                Status = true,
+                Password = request.Password
             });
 
-            await _developerRepository.AddAsync(new Developer
+            Developer developer = new()
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                Id = addedAppUser.Id
-            });
+                PhoneNumber = request.PhoneNumber,
+                Id = user.Id
+            };
 
-            return _mapper.Map<CreateDeveloperCommandResponse>(addedAppUser);
+            await _developerRepository.AddAsync(developer);
+
+            AccessToken accessToken = await _accessTokenService.CreateAsync(user);
+            RefreshToken refreshToken = await _refreshTokenService.AddAsync(user, request.IpAddress);
+
+
+            return new() { AccessToken = accessToken, RefreshToken = refreshToken };
         }
     }
 }

@@ -34,6 +34,7 @@ namespace Kodlama.io.Devs.WebAPI.Controllers
             CreateProgrammingLanguageTechnologyCommandResponse response = await SendRequestAsync(request);
             return Created("", response);
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -41,6 +42,7 @@ namespace Kodlama.io.Devs.WebAPI.Controllers
             await SendRequestAsync(request);
             return NoContent();
         }
+
         [HttpPut]
         public async Task<IActionResult> Update(UpdateProgrammingLanguageTechnologyCommandRequest request)
         {

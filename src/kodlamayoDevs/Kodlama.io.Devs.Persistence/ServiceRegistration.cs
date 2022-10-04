@@ -1,6 +1,8 @@
-﻿using Kodlama.io.Devs.Application.Services.Repositories;
+﻿using Kodlama.io.Devs.Application.Services;
+using Kodlama.io.Devs.Application.Services.Repositories;
 using Kodlama.io.Devs.Persistence.Contexts;
 using Kodlama.io.Devs.Persistence.Repositories;
+using Kodlama.io.Devs.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,6 +21,9 @@ namespace Kodlama.io.Devs.Persistence
             services.AddScoped<IOperationClaimRepository, OperationClaimRepository>();
             services.AddScoped<IUserOperationClaimRepository, UserOperationClaimRepository>();
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            services.AddScoped<IAccessTokenService, AccessTokenService>();
             return services;
         }
     }

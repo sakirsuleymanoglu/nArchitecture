@@ -2,7 +2,6 @@
 using Core.Security.Hashing;
 using Core.Security.JWT;
 using Kodlama.io.Devs.Application.Services.Repositories;
-using Kodlama.io.Devs.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
@@ -24,7 +23,7 @@ namespace Kodlama.io.Devs.Application.Features.Authentications.Commands.Login
         }
         public async Task<LoginCommandResponse> Handle(LoginCommandRequest request, CancellationToken cancellationToken)
         {
-            AppUser? user = await _appUserRepository.GetAsync(x => x.Email == request.Email, tracking: false);
+            Domain.Entities.AppUser? user = await _appUserRepository.GetAsync(x => x.Email == request.Email, tracking: false);
 
             if (user == null)
                 throw new Exception();
