@@ -20,9 +20,9 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguageTechnologies.C
 
         public async Task<CreateProgrammingLanguageTechnologyCommandResponse> Handle(CreateProgrammingLanguageTechnologyCommandRequest request, CancellationToken cancellationToken)
         {
-            ProgrammingLanguageTechnology programmingLanguageTechnology = _mapper.Map<ProgrammingLanguageTechnology>(request);
-
             await _ruleManager.CheckIfAlreadyExistsAsync<ProgrammingLanguageTechnologyAlreadyExistsException>(operation: async () => await _programmingLanguageTechnologyRepository.GetAsync(x => x.Name == request.Name && x.ProgrammingLanguageId == request.ProgrammingLanguageId));
+
+            ProgrammingLanguageTechnology programmingLanguageTechnology = _mapper.Map<ProgrammingLanguageTechnology>(request);
 
             ProgrammingLanguageTechnology createdProgrammingLanguageTechnology = await _programmingLanguageTechnologyRepository.AddAsync(programmingLanguageTechnology);
             return _mapper.Map<CreateProgrammingLanguageTechnologyCommandResponse>(createdProgrammingLanguageTechnology);

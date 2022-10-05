@@ -21,9 +21,9 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguages.Commands.Cre
 
         public async Task<CreateProgrammingLanguageCommandResponse> Handle(CreateProgrammingLanguageCommandRequest request, CancellationToken cancellationToken)
         {
-            ProgrammingLanguage programmingLanguage = _mapper.Map<ProgrammingLanguage>(request);
-
             await _ruleManager.CheckIfAlreadyExistsAsync<ProgrammingLanguageAlreadyExistsException>(operation: async () => await _programmingLanguageRepository.GetAsync(x => x.Name == request.Name));
+
+            ProgrammingLanguage programmingLanguage = _mapper.Map<ProgrammingLanguage>(request);
 
             ProgrammingLanguage createdProgrammingLanguage = await _programmingLanguageRepository.AddAsync(programmingLanguage);
 

@@ -1,6 +1,15 @@
-﻿namespace Kodlama.io.Devs.Application.Features.DeveloperGithubs
+﻿using AutoMapper;
+using Kodlama.io.Devs.Application.Features.DeveloperGithubs.Commands.CreateDeveloperGithub;
+using Kodlama.io.Devs.Domain.Entities;
+
+namespace Kodlama.io.Devs.Application.Features.DeveloperGithubs
 {
-    internal class MappingProfile
+    public class MappingProfile : Profile
     {
+        public MappingProfile()
+        {
+            CreateMap<CreateDeveloperGithubCommandRequest, DeveloperGithub>().ForMember(x => x.Id, x => x.MapFrom(x => x.DeveloperId));
+            CreateMap<DeveloperGithub, CreateDeveloperGithubCommandResponse>();
+        }
     }
 }
