@@ -10,17 +10,21 @@ namespace Kodlama.io.Devs.Application.Features.DeveloperGithubs.Commands.CreateD
     public class CreateDeveloperGithubCommandHandler : IRequestHandler<CreateDeveloperGithubCommandRequest, CreateDeveloperGithubCommandResponse>
     {
         private readonly IDeveloperGithubRepository _developerGithubRepository;
+        private readonly IDeveloperRepository _developerRepository;
         private readonly RuleManager _ruleManager;
         private readonly IMapper _mapper;
-        public CreateDeveloperGithubCommandHandler(IDeveloperGithubRepository developerGithubRepository, IMapper mapper, RuleManager ruleManager)
+        public CreateDeveloperGithubCommandHandler(IDeveloperGithubRepository developerGithubRepository, IMapper mapper, RuleManager ruleManager, IDeveloperRepository developerRepository)
         {
             _developerGithubRepository = developerGithubRepository;
             _mapper = mapper;
             _ruleManager = ruleManager;
+            _developerRepository = developerRepository;
         }
 
         public async Task<CreateDeveloperGithubCommandResponse> Handle(CreateDeveloperGithubCommandRequest request, CancellationToken cancellationToken)
         {
+            await _ruleManager.CheckIfExistsAsync<DeveloperNotFoundException>(operation: async () => await _developerRepository.GetAsync(x => x.Id == request.DeveloperId);
+
             await _ruleManager.CheckIfAlreadyExistsAsync<DeveloperAlreadyHasAGithubException>(operation: async () => await _developerGithubRepository.GetAsync(x => x.Id == request.DeveloperId, tracking: false));
 
             await _ruleManager.CheckIfAlreadyExistsAsync<DeveloperGithubAlreadyExistsException>(operation: async () => await _developerGithubRepository.GetAsync(x => x.Url == request.Url, tracking: false));
