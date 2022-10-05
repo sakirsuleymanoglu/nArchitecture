@@ -23,7 +23,7 @@ namespace Kodlama.io.Devs.Application.Features.DeveloperGithubs.Commands.CreateD
 
         public async Task<CreateDeveloperGithubCommandResponse> Handle(CreateDeveloperGithubCommandRequest request, CancellationToken cancellationToken)
         {
-            await _ruleManager.CheckIfExistsAsync<DeveloperNotFoundException>(operation: async () => await _developerRepository.GetAsync(x => x.Id == request.DeveloperId));
+            await _ruleManager.CheckIfExistsAsync<DeveloperNotFoundException>(operation: async () => await _developerRepository.GetAsync(x => x.Id == request.DeveloperId, tracking: false));
 
             await _ruleManager.CheckIfAlreadyExistsAsync<DeveloperAlreadyHasAGithubException>(operation: async () => await _developerGithubRepository.GetAsync(x => x.Id == request.DeveloperId, tracking: false));
 
