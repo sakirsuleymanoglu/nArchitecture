@@ -14,7 +14,7 @@ namespace Kodlama.io.Devs.Application.Features.ProgrammingLanguageTechnologies
         {
             CreateMap<CreateProgrammingLanguageTechnologyCommandRequest, ProgrammingLanguageTechnology>();
             CreateMap<ProgrammingLanguageTechnology, CreateProgrammingLanguageTechnologyCommandResponse>();
-            CreateMap<ProgrammingLanguageTechnology, GetListProgrammingLanguageTechnologyElementModel>().ForMember(x => x.ProgrammingLanguage, x => x.MapFrom(x => x.ProgrammingLanguage.Name));
+            CreateMap<ProgrammingLanguageTechnology, GetListProgrammingLanguageTechnologyElementModel>().ForMember(x => x.ProgrammingLanguageName, x => x.MapFrom(x => x.ProgrammingLanguage.Name));
             CreateMap<IPaginate<ProgrammingLanguageTechnology>, GetListProgrammingLanguageTechnologyQueryResponse>();
             CreateMap<ProgrammingLanguageTechnology, GetByIdProgrammingLanguageTechnologyQueryResponse>().ForMember(x => x.ProgrammingLanguage, x => x.MapFrom(x => x.ProgrammingLanguage.Name));
         }
