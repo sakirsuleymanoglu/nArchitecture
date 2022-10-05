@@ -1,5 +1,6 @@
 ﻿using Core.Security.Entities;
 using Core.Security.JWT;
+using Kodlama.io.Devs.Application.Exceptions.Developers;
 using Kodlama.io.Devs.Application.Services;
 using Kodlama.io.Devs.Application.Services.Repositories;
 using Kodlama.io.Devs.Domain.Entities;
@@ -13,12 +14,14 @@ namespace Kodlama.io.Devs.Application.Features.Developers.Commands.CreateDevelop
         private readonly IAccessTokenService _accessTokenService;
         private readonly IRefreshTokenService _refreshTokenService;
         private readonly IDeveloperRepository _developerRepository;
-        public CreateDeveloperCommandHandler(IAuthenticationService authenticationService, IAccessTokenService accessTokenService, IRefreshTokenService refreshTokenService, IDeveloperRepository developerRepository)
+        private readonly RuleManager _ruleManager;
+        public CreateDeveloperCommandHandler(IAuthenticationService authenticationService, IAccessTokenService accessTokenService, IRefreshTokenService refreshTokenService, IDeveloperRepository developerRepository, RuleManager ruleManager)
         {
             _authenticationService = authenticationService;
             _accessTokenService = accessTokenService;
             _refreshTokenService = refreshTokenService;
             _developerRepository = developerRepository;
+            _ruleManager = ruleManager;
         }
         public async Task<CreateDeveloperCommandResponse> Handle(CreateDeveloperCommandRequest request, CancellationToken cancellationToken)
         {
@@ -27,6 +30,8 @@ namespace Kodlama.io.Devs.Application.Features.Developers.Commands.CreateDevelop
                 Email = request.Email,
                 Password = request.Password
             });
+
+            await _ruleManager.CheckIfAlreadyExistsAsync<DeveloperPhoneNumberAlreadyExistsException>(operation: async () => await _developerRepository.GetAsync(x => x.PhoneNumber == request.PhoneNumber, tracking: false));
 
             Developer developer = new()
             {
