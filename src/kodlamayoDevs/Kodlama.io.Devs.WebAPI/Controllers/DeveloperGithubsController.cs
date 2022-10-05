@@ -1,5 +1,6 @@
 ﻿using Kodlama.io.Devs.Application.Features.DeveloperGithubs.Commands.CreateDeveloperGithub;
 using Kodlama.io.Devs.Application.Features.DeveloperGithubs.Commands.DeleteDeveloperGithub;
+using Kodlama.io.Devs.Application.Features.DeveloperGithubs.Commands.UpdateDeveloperGithub;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kodlama.io.Devs.WebAPI.Controllers
@@ -19,6 +20,13 @@ namespace Kodlama.io.Devs.WebAPI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             DeleteDeveloperGithubCommandRequest request = new() { Id = id };
+            await SendRequestAsync(request);
+            return NoContent();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateDeveloperGithubCommandRequest request)
+        {
             await SendRequestAsync(request);
             return NoContent();
         }
