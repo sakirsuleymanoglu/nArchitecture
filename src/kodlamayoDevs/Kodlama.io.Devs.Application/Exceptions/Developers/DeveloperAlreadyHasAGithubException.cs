@@ -2,7 +2,7 @@
 {
     public class DeveloperAlreadyHasAGithubException : BadRequestException
     {
-        public DeveloperAlreadyHasAGithubException() : base("Developer already has a github")
+        public DeveloperAlreadyHasAGithubException(string? message = null) : base(message ?? "Developer already has a github")
         {
 
         }

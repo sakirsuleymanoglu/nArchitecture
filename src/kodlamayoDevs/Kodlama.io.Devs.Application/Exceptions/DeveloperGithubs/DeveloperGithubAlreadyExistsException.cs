@@ -2,7 +2,7 @@
 {
     public class DeveloperGithubAlreadyExistsException : BadRequestException
     {
-        public DeveloperGithubAlreadyExistsException() : base("developer github already exists")
+        public DeveloperGithubAlreadyExistsException(string? message = null) : base(message ?? "developer github already exists")
         {
 
         }

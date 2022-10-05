@@ -2,7 +2,7 @@
 {
     public class ProgrammingLanguageAlreadyExistsException : BadRequestException
     {
-        public ProgrammingLanguageAlreadyExistsException() : base("Programming language already exists")
+        public ProgrammingLanguageAlreadyExistsException(string? message = null) : base(message ?? "Programming language already exists")
         {
 
         }

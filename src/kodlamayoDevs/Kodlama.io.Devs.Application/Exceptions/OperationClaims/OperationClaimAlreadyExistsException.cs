@@ -2,7 +2,7 @@
 {
     public class OperationClaimAlreadyExistsException : BadRequestException
     {
-        public OperationClaimAlreadyExistsException() : base("operation claim already exists")
+        public OperationClaimAlreadyExistsException(string? message = null) : base(message ?? "operation claim already exists")
         {
 
         }

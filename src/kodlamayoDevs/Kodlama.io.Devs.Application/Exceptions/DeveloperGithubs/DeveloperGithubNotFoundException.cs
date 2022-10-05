@@ -2,8 +2,9 @@
 {
     public class DeveloperGithubNotFoundException : NotFoundException
     {
-        public DeveloperGithubNotFoundException() : base("developer github not found")
+        public DeveloperGithubNotFoundException(string? message = null) : base(message ?? "developer github not found")
         {
+
         }
     }
 }

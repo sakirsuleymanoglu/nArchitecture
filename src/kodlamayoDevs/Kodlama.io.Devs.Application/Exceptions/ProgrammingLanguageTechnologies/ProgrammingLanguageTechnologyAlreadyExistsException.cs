@@ -2,7 +2,7 @@
 {
     public class ProgrammingLanguageTechnologyAlreadyExistsException : BadRequestException
     {
-        public ProgrammingLanguageTechnologyAlreadyExistsException() : base("Programming language technology already exists")
+        public ProgrammingLanguageTechnologyAlreadyExistsException(string? message = null) : base(message ?? "Programming language technology already exists")
         {
 
         }

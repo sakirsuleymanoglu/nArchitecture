@@ -2,12 +2,7 @@
 {
     public class IncorrectLoginException : BadRequestException
     {
-        public IncorrectLoginException() : base("email or password incorrect")
-        {
-
-        }
-
-        public IncorrectLoginException(string message) : base(message)
+        public IncorrectLoginException(string? message = null) : base(message ?? "user email or password incorrect")
         {
 
         }

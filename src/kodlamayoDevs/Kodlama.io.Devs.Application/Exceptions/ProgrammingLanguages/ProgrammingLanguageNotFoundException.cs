@@ -2,7 +2,7 @@
 {
     public class ProgrammingLanguageNotFoundException : NotFoundException
     {
-        public ProgrammingLanguageNotFoundException() : base("Programming language not found")
+        public ProgrammingLanguageNotFoundException(string? message = null) : base(message ?? "Programming language not found")
         {
 
         }

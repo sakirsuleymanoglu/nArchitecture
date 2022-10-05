@@ -2,7 +2,7 @@
 {
     public class UserEmailAlreadyExistsException : BadRequestException
     {
-        public UserEmailAlreadyExistsException() : base("User email already exists")
+        public UserEmailAlreadyExistsException(string? message = null) : base(message ?? "User email already exists")
         {
 
         }

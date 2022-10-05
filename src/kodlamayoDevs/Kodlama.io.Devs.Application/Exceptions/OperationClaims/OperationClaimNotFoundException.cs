@@ -2,7 +2,7 @@
 {
     public class OperationClaimNotFoundException : NotFoundException
     {
-        public OperationClaimNotFoundException() : base("operation claim not found")
+        public OperationClaimNotFoundException(string? message = null) : base(message ?? "operation claim not found")
         {
 
         }

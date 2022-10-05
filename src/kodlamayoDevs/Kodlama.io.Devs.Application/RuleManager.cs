@@ -5,55 +5,51 @@ namespace Kodlama.io.Devs.Application
 {
     public class RuleManager
     {
-        private object? CreateException(Type type, string? message = null) => Activator.CreateInstance(type, message != null ? new object[] { message } : null);
-
-        public void CheckWithAnyRule<TException>(Func<bool> operation, string? message = null) where TException : BusinessException, new()
+        private TException CreateException<TException>(Type type, string? message = null) where TException : BusinessException
         {
-            object? exception = CreateException(typeof(TException), message);
+            object? exception = Activator.CreateInstance(type, new object[] { message });
 
+            if (exception == null)
+                throw new NullReferenceException("exception has a null reference");
+
+            return (TException)exception;
+        }
+
+        public void CheckWithAnyRule<TException>(Func<bool> operation, string? message = null) where TException : BusinessException
+        {
             if (!operation.Invoke())
-                throw exception != null ? (TException)exception : new TException();
+                throw CreateException<TException>(typeof(TException), message);
         }
 
-        public async Task CheckWithAnyRuleAsync<TException>(Func<Task<bool>> operation, string? message = null) where TException : BusinessException, new()
+        public async Task CheckWithAnyRuleAsync<TException>(Func<Task<bool>> operation, string? message = null) where TException : BusinessException
         {
-            object? exception = CreateException(typeof(TException), message);
-
             if (!await operation.Invoke())
-                throw exception != null ? (TException)exception : new TException();
+                throw CreateException<TException>(typeof(TException), message);
         }
 
-        public void CheckIfExists<TException>(Func<object?> operation, string? message = null) where TException : NotFoundException, new()
+        public void CheckIfExists<TException>(Func<object?> operation, string? message = null) where TException : NotFoundException
         {
-            object? exception = CreateException(typeof(TException), message);
-
             if (operation.Invoke() == null)
-                throw exception != null ? (TException)exception : new TException();
+                throw CreateException<TException>(typeof(TException), message);
         }
 
-        public async Task CheckIfExistsAsync<TException>(Func<Task<object?>> operation, string? message = null) where TException : NotFoundException, new()
+        public async Task CheckIfExistsAsync<TException>(Func<Task<object?>> operation, string? message = null) where TException : NotFoundException
         {
-            object? exception = CreateException(typeof(TException), message);
-
             if (await operation.Invoke() == null)
-                throw exception != null ? (TException)exception : new TException();
+                throw CreateException<TException>(typeof(TException), message);
         }
 
-        public void CheckIfAlreadyExists<TException>(Func<object?> operation, string? message = null) where TException : BadRequestException, new()
+        public void CheckIfAlreadyExists<TException>(Func<object?> operation, string? message = null) where TException : BadRequestException
         {
-            object? exception = CreateException(typeof(TException), message);
-
             if (operation.Invoke() != null)
-                throw exception != null ? (TException)exception : new TException();
+                throw CreateException<TException>(typeof(TException), message);
         }
 
 
-        public async Task CheckIfAlreadyExistsAsync<TException>(Func<Task<object?>> operation, string? message = null) where TException : BadRequestException, new()
+        public async Task CheckIfAlreadyExistsAsync<TException>(Func<Task<object?>> operation, string? message = null) where TException : BadRequestException
         {
-            object? exception = CreateException(typeof(TException), message);
-
             if (await operation.Invoke() != null)
-                throw exception != null ? (TException)exception : new TException();
+                throw CreateException<TException>(typeof(TException), message);
         }
     }
 }

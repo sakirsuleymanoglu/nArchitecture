@@ -2,7 +2,7 @@
 {
     public class RefreshTokenNotFoundException : NotFoundException
     {
-        public RefreshTokenNotFoundException() : base("refresh token not found")
+        public RefreshTokenNotFoundException(string? message = null) : base(message ?? "refresh token not found")
         {
 
         }
