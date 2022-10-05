@@ -6,5 +6,10 @@
         {
 
         }
+
+        public IncorrectLoginException(string message) : base(message)
+        {
+
+        }
     }
 }

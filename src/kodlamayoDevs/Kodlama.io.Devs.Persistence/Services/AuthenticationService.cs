@@ -47,7 +47,7 @@ namespace Kodlama.io.Devs.Persistence.Services
 
             _ruleManager.CheckIfExists<UserNotFoundException>(operation: () => user);
 
-            _ruleManager.CheckWithAnyRule<IncorrectLoginException>(operation: () => HashingHelper.VerifyPasswordHash(userForLoginDto.Password, user!.PasswordHash, user.PasswordSalt));
+            _ruleManager.CheckWithAnyRule<IncorrectLoginException>(operation: () => HashingHelper.VerifyPasswordHash(userForLoginDto.Password, user!.PasswordHash, user.PasswordSalt), message: "Geçersiz parola ya da email");
 
             return user!;
         }
