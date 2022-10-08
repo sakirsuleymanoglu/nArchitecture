@@ -10,7 +10,7 @@ namespace Kodlama.io.Devs.WebAPI.Controllers
         protected async Task<TResponse> SendRequestAsync<TResponse>(IRequest<TResponse> request)
         {
             if (Mediator is null)
-                throw new Exception("Mediator is null");
+                throw new NullReferenceException("Mediator has a null reference");
             return await Mediator.Send(request);
         }
 
