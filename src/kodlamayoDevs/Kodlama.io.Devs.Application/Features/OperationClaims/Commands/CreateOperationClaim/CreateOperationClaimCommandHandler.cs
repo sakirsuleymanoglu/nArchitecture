@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core.Application;
 using Core.Security.Entities;
 using Kodlama.io.Devs.Application.Exceptions.OperationClaims;
 using Kodlama.io.Devs.Application.Services.Repositories;

@@ -1,4 +1,6 @@
-﻿namespace Kodlama.io.Devs.Application.Exceptions.ProgrammingLanguageTechnologies
+﻿using Core.CrossCuttingConcerns.Exceptions;
+
+namespace Kodlama.io.Devs.Application.Exceptions.ProgrammingLanguageTechnologies
 {
     public class ProgrammingLanguageTechnologyNotFoundException : NotFoundException
     {

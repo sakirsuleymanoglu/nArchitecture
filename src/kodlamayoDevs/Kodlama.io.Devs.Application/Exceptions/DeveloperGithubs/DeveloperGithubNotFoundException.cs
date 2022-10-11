@@ -1,4 +1,6 @@
-﻿namespace Kodlama.io.Devs.Application.Exceptions.DeveloperGithubs
+﻿using Core.CrossCuttingConcerns.Exceptions;
+
+namespace Kodlama.io.Devs.Application.Exceptions.DeveloperGithubs
 {
     public class DeveloperGithubNotFoundException : NotFoundException
     {

@@ -1,4 +1,5 @@
-﻿using Kodlama.io.Devs.Application.Exceptions.DeveloperGithubs;
+﻿using Core.Application;
+using Kodlama.io.Devs.Application.Exceptions.DeveloperGithubs;
 using Kodlama.io.Devs.Application.Services.Repositories;
 using Kodlama.io.Devs.Domain.Entities;
 using MediatR;

@@ -1,6 +1,6 @@
-﻿using Core.Security.Entities;
+﻿using Core.Application;
+using Core.Security.Entities;
 using Core.Security.JWT;
-using Kodlama.io.Devs.Application;
 using Kodlama.io.Devs.Application.Exceptions.RefreshTokens;
 using Kodlama.io.Devs.Application.Services;
 using Kodlama.io.Devs.Application.Services.Repositories;

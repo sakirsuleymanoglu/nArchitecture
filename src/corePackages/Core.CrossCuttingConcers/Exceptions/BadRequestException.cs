@@ -1,7 +1,6 @@
 ﻿using Core.CrossCuttingConcerns.Enumerations;
-using Core.CrossCuttingConcerns.Exceptions;
 
-namespace Kodlama.io.Devs.Application.Exceptions
+namespace Core.CrossCuttingConcerns.Exceptions
 {
     public class BadRequestException : BusinessException
     {

@@ -1,4 +1,6 @@
-﻿namespace Kodlama.io.Devs.Application.Exceptions.RefreshTokens
+﻿using Core.CrossCuttingConcerns.Exceptions;
+
+namespace Kodlama.io.Devs.Application.Exceptions.RefreshTokens
 {
     public class RefreshTokenNotFoundException : NotFoundException
     {

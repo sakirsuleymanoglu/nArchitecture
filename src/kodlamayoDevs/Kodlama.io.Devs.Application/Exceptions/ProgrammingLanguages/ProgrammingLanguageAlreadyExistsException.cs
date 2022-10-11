@@ -1,4 +1,6 @@
-﻿namespace Kodlama.io.Devs.Application.Exceptions.ProgrammingLanguages
+﻿using Core.CrossCuttingConcerns.Exceptions;
+
+namespace Kodlama.io.Devs.Application.Exceptions.ProgrammingLanguages
 {
     public class ProgrammingLanguageAlreadyExistsException : BadRequestException
     {

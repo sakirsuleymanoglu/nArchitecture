@@ -1,4 +1,6 @@
-﻿namespace Kodlama.io.Devs.Application.Exceptions.Users
+﻿using Core.CrossCuttingConcerns.Exceptions;
+
+namespace Kodlama.io.Devs.Application.Exceptions.Users
 {
     public class UserEmailAlreadyExistsException : BadRequestException
     {

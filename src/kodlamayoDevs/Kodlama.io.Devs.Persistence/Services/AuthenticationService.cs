@@ -1,7 +1,7 @@
-﻿using Core.Security.Dtos;
+﻿using Core.Application;
+using Core.Security.Dtos;
 using Core.Security.Entities;
 using Core.Security.Hashing;
-using Kodlama.io.Devs.Application;
 using Kodlama.io.Devs.Application.Exceptions.Authentications;
 using Kodlama.io.Devs.Application.Exceptions.Users;
 using Kodlama.io.Devs.Application.Services;

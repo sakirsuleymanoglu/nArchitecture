@@ -1,13 +1,12 @@
 ﻿using Core.CrossCuttingConcerns.Exceptions;
-using Kodlama.io.Devs.Application.Exceptions;
 
-namespace Kodlama.io.Devs.Application
+namespace Core.Application
 {
     public class RuleManager
     {
         private TException CreateException<TException>(Type type, string? message = null) where TException : BusinessException
         {
-            object? exception = Activator.CreateInstance(type, new object[] { message });
+            object? exception = Activator.CreateInstance(type, args: new object?[] { message });
 
             if (exception == null)
                 throw new NullReferenceException("exception has a null reference");

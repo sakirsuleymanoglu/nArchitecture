@@ -1,4 +1,5 @@
-﻿using Core.Application.Pipelines.Authorization;
+﻿using Core.Application;
+using Core.Application.Pipelines.Authorization;
 using Core.Application.Pipelines.Validation;
 using FluentValidation;
 using MediatR;

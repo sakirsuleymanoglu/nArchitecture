@@ -1,4 +1,6 @@
-﻿namespace Kodlama.io.Devs.Application.Exceptions.OperationClaims
+﻿using Core.CrossCuttingConcerns.Exceptions;
+
+namespace Kodlama.io.Devs.Application.Exceptions.OperationClaims
 {
     public class OperationClaimAlreadyExistsException : BadRequestException
     {
