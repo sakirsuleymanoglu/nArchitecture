@@ -23,10 +23,7 @@ namespace Kodlama.io.Devs.Persistence.Services
 
         public async Task<User> RegisterAsync(UserForRegisterDto userForRegisterDto)
         {
-            await _ruleManager.CheckIfAlreadyExistsAsync<UserEmailAlreadyExistsException>(operation: async () =>
-            {
-                return await _appUserRepository.GetAsync(x => x.Email == userForRegisterDto.Email);
-            });
+            await _ruleManager.CheckIfAlreadyExistsAsync<UserEmailAlreadyExistsException>(operation: async () => await _appUserRepository.GetAsync(x => x.Email == userForRegisterDto.Email, tracking: false));
 
             HashingHelper.CreatePasswordHash(userForRegisterDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
@@ -47,7 +44,7 @@ namespace Kodlama.io.Devs.Persistence.Services
 
             _ruleManager.CheckIfExists<UserNotFoundException>(operation: () => user);
 
-            _ruleManager.CheckWithAnyRule<IncorrectLoginException>(operation: () => HashingHelper.VerifyPasswordHash(userForLoginDto.Password, user!.PasswordHash, user.PasswordSalt), message: "Geçersiz parola ya da şifre");
+            _ruleManager.CheckWithAnyRule<IncorrectLoginException>(operation: () => HashingHelper.VerifyPasswordHash(userForLoginDto.Password, user!.PasswordHash, user.PasswordSalt));
 
             return user!;
         }
